@@ -1,0 +1,39 @@
+esphome:
+  includes:
+    - weather_sensors_433mhz.h
+  name: weather
+  platform: ESP8266
+  board: esp01_1m
+
+wifi:
+  ssid: "IOT-Home"
+  password: "1A2B3C4D5E"
+
+  # Enable fallback hotspot (captive portal) in case wifi connection fails
+  ap:
+    ssid: "Weather Fallback Hotspot"
+    password: "N2BYYvPfBhu7"
+
+captive_portal:
+
+# Enable logging
+logger:
+
+# Enable Home Assistant API
+api:
+  password: "1"
+
+ota:
+  password: "1"
+  
+sensor:
+- platform: custom
+  lambda: |-
+    auto sensor1_433mhz = new WeatherSensors();
+    App.register_component(sensor1_433mhz);
+    return {sensor1_433mhz};
+
+  sensors:
+    name: "WeatherSensors"
+    unit_of_measurement: hPa
+    accuracy_decimals: 2
